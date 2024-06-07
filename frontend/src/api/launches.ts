@@ -1,3 +1,5 @@
+import { useFetch } from "./fetch";
+
 export type Launch = {
   flight_number: number;
   name?: string;
@@ -19,20 +21,24 @@ export type Launch = {
   }[];
   upcoming: boolean;
   details?: string;
+
   fairings: {
     reused?: boolean;
     recovery_attempt?: boolean;
     recovered?: boolean;
     ships: string[];
   };
+
   crew: {
     crew?: string;
     role?: string;
   }[];
+
   ships: string[];
   capsules: string[];
   payloads: string[];
   launchpad?: string;
+
   cores: {
     core?: string;
     flight?: number;
@@ -44,20 +50,21 @@ export type Launch = {
     landing_type?: string;
     landpad?: string;
   }[];
-  links: {
-    patch: {
+
+  links?: {
+    patch?: {
       small?: string;
       large?: string;
     };
-    reddit: {
+    reddit?: {
       campaign?: string;
       launch?: string;
       media?: string;
       recovery?: string;
     };
-    flickr: {
-      small: string;
-      original: string;
+    flickr?: {
+      small?: string[];
+      original?: string[];
     };
     presskit?: string;
     webcast?: string;
@@ -67,3 +74,10 @@ export type Launch = {
   };
   auto_update: boolean;
 };
+
+type Response = Launch[];
+
+export const useLaunches = () =>
+  useFetch<Response>(() =>
+    fetch("http://localhost:3000/api/launches").then((r) => r.json())
+  );
