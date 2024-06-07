@@ -5,8 +5,9 @@ import styles from "./App.module.css";
 export function App() {
   return (
     <div className={styles.layout}>
-      <header className={styles.header}>SpaceX</header>
       <main className={styles.main}>
+        <header className={styles.header}>SpaceX</header>
+
         <Main />
       </main>
     </div>
