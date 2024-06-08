@@ -75,7 +75,7 @@ const Item = ({
       onClick={() => {}}
       title={
         name || success !== undefined ? (
-          <div className={styles.title}>
+          <div title={name} className={styles.title}>
             {name && <span className={styles.titleText}>{name}</span>}
             <Status success={success} upcoming={upcoming} />
           </div>
@@ -89,7 +89,7 @@ const Item = ({
       content={
         <>
           {date && (
-            <span>
+            <div>
               {new Intl.DateTimeFormat("en-US", {
                 day: "2-digit",
                 month: "2-digit",
@@ -99,9 +99,9 @@ const Item = ({
                 second: "2-digit",
                 timeZoneName: "long",
               }).format(new Date(date))}
-            </span>
+            </div>
           )}
-          {rocketId && <span>{rocketId}</span>}
+          {rocketId && <div>{rocketId}</div>}
         </>
       }
     />

@@ -25,15 +25,18 @@
     padding-block: var(--space-2) 0;
     box-sizing: border-box;
   }
+
   .stub {
     background-color: var(--color-secondary);
     min-height: 50%;
   }
+
   .image,
   .stub {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     width: 100%;
   }
+
   .title {
     padding-block: 0;
     padding-inline: var(--space-4);
@@ -41,9 +44,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 0;
   }
+
   .content {
     padding-inline: var(--space-4);
     padding-block: 0 var(--space-4);
+    flex-shrink: 0;
   }
 }

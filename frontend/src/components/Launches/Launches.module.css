@@ -8,7 +8,7 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, max-content));
 
   .item {
-    min-height: 300px;
+    min-height: 400px;
   }
 
   .title {

@@ -4,3 +4,9 @@
   gap: var(--space-4);
   margin-block-end: var(--space-5);
 }
+
+@media only screen and (max-width: 768px) {
+  .filters {
+    grid-auto-flow: row;
+  }
+}
