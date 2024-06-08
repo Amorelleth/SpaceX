@@ -1,23 +1,22 @@
-import type { ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import { clsx } from "clsx";
 
 import { LazyImage } from "../LazyImage";
 
 import styles from "./Card.module.css";
 
-export const Card = ({
-  title,
-  content,
-  image,
-  onClick,
-}: {
-  title?: ReactNode;
-  content: ReactNode;
-  image?: { small?: string; large?: string; alt: string };
-  onClick?: () => void;
-}) => {
+export const Card = forwardRef<
+  HTMLDivElement,
+  {
+    title?: ReactNode;
+    content: ReactNode;
+    image?: { small?: string; large?: string; alt: string };
+    onClick?: () => void;
+  }
+>(({ title, content, image, onClick }, ref) => {
   return (
     <div
+      ref={ref}
       className={clsx(styles.container, { [styles.clickable]: onClick })}
       tabIndex={onClick ? 0 : -1}
     >
@@ -30,4 +29,4 @@ export const Card = ({
       <div className={styles.content}>{content}</div>
     </div>
   );
-};
+});
