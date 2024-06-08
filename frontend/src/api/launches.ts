@@ -86,28 +86,32 @@ export type Response = {
   nextPage: number;
 };
 
-export type Query = {
-  upcoming?: boolean;
-  success?: boolean;
-  rocket?: string;
-  $text?: {
-    $search?: string;
+export type Params = {
+  limit?: number;
+  page?: number;
+  query?: {
+    upcoming?: boolean;
+    success?: boolean;
+    rocket?: string;
+    $text?: {
+      $search?: string;
+    };
   };
+  sort?:
+    | {
+        name: "asc" | "desc";
+      }
+    | {
+        date_utc: "asc" | "desc";
+      };
 };
-
-type Sort = { name: "asc" | "desc" } | { date_utc: "asc" | "desc" };
 
 export const fetchLaunches = ({
   limit = 10,
   page = 1,
   query = {},
   sort,
-}: {
-  limit?: number;
-  page?: number;
-  query?: Query;
-  sort?: Sort;
-} = {}) => {
+}: Params = {}) => {
   return fetch("http://localhost:3000/api/launches", {
     method: "POST",
     headers: {
