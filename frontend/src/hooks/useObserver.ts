@@ -1,9 +1,9 @@
 import { useRef, useCallback } from "react";
 
-export const useObserver = (
+export function useObserver(
   callback: () => void,
   options?: IntersectionObserverInit
-) => {
+) {
   const observer = useRef<IntersectionObserver>();
 
   const ref = useCallback(
@@ -22,4 +22,4 @@ export const useObserver = (
   );
 
   return ref;
-};
+}

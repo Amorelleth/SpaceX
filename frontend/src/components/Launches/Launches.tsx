@@ -1,17 +1,37 @@
 import type { Launch } from "../../api/launches";
 
+import { useObserver } from "../../hooks/useObserver";
 import { Card } from "../../ui/Card";
 import { Chip } from "../../ui/Chip";
 
 import styles from "./Launches.module.css";
 
-export const Launches = ({ value }: { value?: Launch[] }) => {
+export const Launches = ({
+  value,
+  hasMore,
+  isLoading,
+  loadMore,
+}: {
+  value?: Launch[];
+  hasMore: boolean;
+  isLoading: boolean;
+  loadMore: () => void;
+}) => {
+  const measurementRef = useObserver(() => {
+    if (hasMore && !isLoading) {
+      loadMore();
+    }
+  });
+
   return (
     <ul className={styles.list}>
-      {value?.map((item) => {
+      {value?.map((item, index) => {
         return (
           <li className={styles.item} key={item.name}>
             <Item
+              measurementRef={
+                index === value.length - 1 ? measurementRef : undefined
+              }
               date={item.date_utc}
               rocketId={item.rocket}
               success={item.success}
@@ -37,6 +57,7 @@ const Item = ({
   // rocketId,
   date,
   upcoming,
+  measurementRef,
 }: {
   success?: boolean;
   details?: string;
@@ -46,9 +67,11 @@ const Item = ({
   rocketId?: string;
   date?: string;
   upcoming?: boolean;
+  measurementRef?: (node: HTMLElement | null) => void;
 }) => {
   return (
     <Card
+      ref={measurementRef}
       onClick={() => {}}
       title={
         name || success !== undefined ? (
@@ -92,7 +115,7 @@ const Status = ({
   upcoming?: boolean;
 }) => {
   const color = success ? "success" : upcoming ? "warning" : "error";
-  const status = success ? "Success" : upcoming ? "Upcoming" : "Fail";
+  const status = success ? "Success" : upcoming ? "Future" : "Failed";
 
   return <Chip color={color}>{status}</Chip>;
 };
