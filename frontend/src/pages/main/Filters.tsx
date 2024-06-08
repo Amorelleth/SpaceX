@@ -1,5 +1,5 @@
-import { Select } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/input";
+import { Select } from "@chakra-ui/select";
 
 import styles from "./Filters.module.css";
 
