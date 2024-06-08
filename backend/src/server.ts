@@ -1,30 +1,11 @@
 import express from "express";
-import https from "https";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
 
-const fetchLaunches = () => {
-  return new Promise((resolve, reject) => {
-    https
-      .get("https://api.spacexdata.com/v5/launches", (res) => {
-        let data = "";
-
-        res.on("data", (chunk) => {
-          data += chunk;
-        });
-
-        res.on("end", () => {
-          resolve(JSON.parse(data));
-        });
-      })
-      .on("error", (err) => {
-        reject(err);
-      });
-  });
-};
-
+app.use(bodyParser.json());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -32,12 +13,30 @@ app.use(
   })
 );
 
-app.get("/api/launches", async (_, res) => {
+app.post("/api/launches", async (req, res) => {
+  const requestBody = req.body;
+
   try {
-    const launches = await fetchLaunches();
-    res.json(launches);
+    const response = await fetch(
+      "https://api.spacexdata.com/v5/launches/query",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error();
+    }
+
+    const data = await response.json();
+    res.json(data);
   } catch (error) {
-    res.status(500).send("Error fetching launches");
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
