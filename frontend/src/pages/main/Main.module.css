@@ -1,0 +1,7 @@
+.loader {
+  color: var(--color-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block-start: 10vw;
+}
