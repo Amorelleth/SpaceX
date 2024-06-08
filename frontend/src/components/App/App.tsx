@@ -7,7 +7,6 @@ export function App() {
     <div className={styles.layout}>
       <main className={styles.main}>
         <header className={styles.header}>SpaceX</header>
-
         <Main />
       </main>
     </div>
