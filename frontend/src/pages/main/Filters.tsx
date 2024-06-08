@@ -39,7 +39,10 @@ export const FiltersToolbar = ({
         value={value?.sort}
         variant="filled"
         onChange={(event) =>
-          onChange({ ...value, sort: event.target.value as Filters["sort"] })
+          onChange({
+            ...value,
+            sort: event.target.value as Filters["sort"],
+          })
         }
       >
         <option value="name-asc">Name ↑</option>
@@ -52,7 +55,9 @@ export const FiltersToolbar = ({
         value={value.search ?? ""}
         placeholder="Search"
         variant="filled"
-        onChange={(event) => onChange({ ...value, search: event.target.value })}
+        onChange={(event) =>
+          onChange({ ...value, search: event.target.value.trim() })
+        }
       />
 
       <Input
@@ -60,7 +65,7 @@ export const FiltersToolbar = ({
         placeholder="Rocket ID"
         variant="filled"
         onChange={(event) =>
-          onChange({ ...value, rocketId: event.target.value })
+          onChange({ ...value, rocketId: event.target.value.trim() })
         }
       />
     </div>
