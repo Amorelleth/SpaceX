@@ -4,10 +4,11 @@
   --color-secondary: #273469;
   --color-paper: #fafaff;
   --color-text: #30343f;
-  --color-error: #f72585;
-  --color-warning: #f7b6d3;
-  --color-success: #57cc99;
   --color-link: #0d00a4;
+
+  --color-error: #f72585;
+  --color-success: #57cc99;
+  --color-warning: #fca311;
 
   --space-1: 4px;
   --space-2: 8px;

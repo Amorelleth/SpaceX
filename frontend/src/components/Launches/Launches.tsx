@@ -10,15 +10,15 @@ export const Launches = ({ value }: { value?: Launch[] }) => {
     <ul className={styles.list}>
       {value?.map((item) => {
         return (
-          <li className={styles.item}>
+          <li className={styles.item} key={item.name}>
             <Item
-              key={item.name}
               date={item.date_utc}
               rocketId={item.rocket}
               success={item.success}
               details={item.details}
               flightNumber={item.flight_number}
               name={item.name}
+              upcoming={item.upcoming}
               image={item?.links?.patch}
             />
           </li>
@@ -36,6 +36,7 @@ const Item = ({
   image,
   // rocketId,
   date,
+  upcoming,
 }: {
   success?: boolean;
   details?: string;
@@ -44,6 +45,7 @@ const Item = ({
   image?: { small?: string; large?: string };
   rocketId?: string;
   date?: string;
+  upcoming?: boolean;
 }) => {
   return (
     <Card
@@ -52,11 +54,7 @@ const Item = ({
         name || success !== undefined ? (
           <div className={styles.title}>
             {name && <span className={styles.titleText}>{name}</span>}
-            {success !== undefined && (
-              <Chip color={success ? "success" : "warning"}>
-                {success ? "Success" : "Fail"}
-              </Chip>
-            )}
+            <Status success={success} upcoming={upcoming} />
           </div>
         ) : undefined
       }
@@ -84,4 +82,17 @@ const Item = ({
       }
     />
   );
+};
+
+const Status = ({
+  success,
+  upcoming,
+}: {
+  success?: boolean;
+  upcoming?: boolean;
+}) => {
+  const color = success ? "success" : upcoming ? "warning" : "error";
+  const status = success ? "Success" : upcoming ? "Upcoming" : "Fail";
+
+  return <Chip color={color}>{status}</Chip>;
 };

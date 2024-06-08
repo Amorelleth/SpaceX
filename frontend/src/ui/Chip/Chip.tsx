@@ -8,18 +8,18 @@ export const Chip = ({
   color,
   children,
 }: {
-  color: "success" | "warning";
+  color: "success" | "error" | "warning";
   children: ReactNode;
 }) => {
-  switch (color) {
-    case "success":
-      return (
-        <span className={clsx(styles.status, styles.success)}>{children}</span>
-      );
-
-    case "warning":
-      return (
-        <span className={clsx(styles.status, styles.warning)}>{children}</span>
-      );
-  }
+  return (
+    <span
+      className={clsx(styles.status, {
+        [styles.success]: color === "success",
+        [styles.error]: color === "error",
+        [styles.warning]: color === "warning",
+      })}
+    >
+      {children}
+    </span>
+  );
 };
