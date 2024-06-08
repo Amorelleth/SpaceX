@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { fetchLaunches, type Response, type Launch } from "../../api/launches";
+import { fetchLaunches, type Launch } from "../../api/launches";
 import { Launches } from "../../components/Launches";
 
 import { FiltersToolbar, type Filters } from "./Filters";
@@ -20,7 +20,7 @@ export const Main = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const data = (await fetchLaunches(getParams(page, filters))) as Response;
+      const data = await fetchLaunches(getParams(page, filters));
       setHasMore(data.hasNextPage);
       setLaunches((launches) => [...launches, ...data.launches]);
     } catch {
