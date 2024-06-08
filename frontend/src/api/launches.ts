@@ -86,12 +86,27 @@ export type Response = {
   nextPage: number;
 };
 
+export type Query = {
+  upcoming?: boolean;
+  success?: boolean;
+  rocket?: string;
+  $text?: {
+    $search?: string;
+  };
+};
+
+type Sort = { name: "asc" | "desc" } | { date_utc: "asc" | "desc" };
+
 export const fetchLaunches = ({
-  limit = 3,
+  limit = 10,
   page = 1,
+  query = {},
+  sort,
 }: {
   limit?: number;
   page?: number;
+  query?: Query;
+  sort?: Sort;
 } = {}) => {
   return fetch("http://localhost:3000/api/launches", {
     method: "POST",
@@ -99,11 +114,11 @@ export const fetchLaunches = ({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query: {},
+      query,
       options: {
         limit,
         page,
-        // sort { Object | String } - Sort order. Documentation
+        sort,
         pagination: true,
         select: [
           "name",

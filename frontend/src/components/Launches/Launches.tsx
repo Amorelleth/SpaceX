@@ -54,7 +54,7 @@ const Item = ({
   flightNumber,
   name,
   image,
-  // rocketId,
+  rocketId,
   date,
   upcoming,
   measurementRef,
@@ -101,6 +101,7 @@ const Item = ({
               }).format(new Date(date))}
             </span>
           )}
+          {rocketId && <span>{rocketId}</span>}
         </>
       }
     />

@@ -1,0 +1,6 @@
+.filters {
+  display: grid;
+  grid-auto-flow: column;
+  gap: var(--space-4);
+  margin-block-end: var(--space-5);
+}
