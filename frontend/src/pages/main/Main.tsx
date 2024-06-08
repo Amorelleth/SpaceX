@@ -23,15 +23,21 @@ export const Main = () => {
 const Content = ({ filters }: { filters: Filters }) => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   const [launches, setLaunches] = useState<Launch[]>([]);
   const [hasMore, setHasMore] = useState(false);
 
   const fetchData = useCallback(async () => {
-    const data = await fetchLaunches(getParams(page, filters));
-    setHasMore(data.hasNextPage);
-    setLaunches((launches) => [...launches, ...data.launches]);
-    setIsLoading(false);
+    try {
+      const data = await fetchLaunches(getParams(page, filters));
+      setHasMore(data.hasNextPage);
+      setLaunches((launches) => [...launches, ...data.launches]);
+    } catch {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   }, [page, filters]);
 
   useEffect(() => {
@@ -59,6 +65,7 @@ const Content = ({ filters }: { filters: Filters }) => {
         isLoading={isLoading}
         loadMore={loadMore}
       />
+      {isError && <div className={styles.error}>Something went wrong</div>}
       {isLoading && <div className={styles.loader}>Loading</div>}
     </>
   );
