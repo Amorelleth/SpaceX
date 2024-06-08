@@ -1,0 +1,17 @@
+.status {
+  border-radius: 9999px;
+  align-self: flex-start;
+  padding-inline: 15px;
+  padding-block: 5px;
+  font-size: 12px;
+
+  &.success {
+    color: var(--color-text);
+    background-color: var(--color-success);
+  }
+
+  &.warning {
+    color: var(--color-error);
+    background-color: var(--color-warning);
+  }
+}
