@@ -1,1 +1,0 @@
-export { LaunchesList } from "./LaunchesList";
