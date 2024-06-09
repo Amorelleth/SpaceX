@@ -5,25 +5,41 @@ import { Launches } from "../../components/Launches";
 
 import { FiltersToolbar, type Filters } from "./Filters";
 
+import { fuzzySearch } from "./search";
+
 import styles from "./Main.module.css";
 
 export const Main = () => {
   const [filters, setFilters] = useState<Filters>({});
+  const [search, setSearch] = useState<string>();
 
   return (
     <>
-      <FiltersToolbar value={filters} onChange={setFilters} />
-      <Content filters={filters} />
+      <FiltersToolbar
+        filters={filters}
+        setFilters={setFilters}
+        setSearch={setSearch}
+        search={search}
+      />
+      <Content filters={filters} search={search} />
     </>
   );
 };
 
-const Content = ({ filters }: { filters: Filters }) => {
+const Content = ({
+  filters,
+  search,
+}: {
+  filters: Filters;
+  search?: string;
+}) => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   const [launches, setLaunches] = useState<Launch[]>([]);
+  const [searchedLaunches, setSearchedLaunches] = useState<Launch[]>([]);
+
   const [hasMore, setHasMore] = useState(false);
 
   const fetchData = useCallback(async () => {
@@ -55,10 +71,14 @@ const Content = ({ filters }: { filters: Filters }) => {
     setIsLoading(true);
   }, []);
 
+  useEffect(() => {
+    setSearchedLaunches(search ? fuzzySearch(launches, search) : launches);
+  }, [search, launches]);
+
   return (
     <>
       <Launches
-        value={launches}
+        value={searchedLaunches}
         hasMore={hasMore}
         isLoading={isLoading}
         loadMore={loadMore}

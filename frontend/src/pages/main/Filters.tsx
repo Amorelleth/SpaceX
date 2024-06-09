@@ -7,26 +7,29 @@ type Status = "future" | "success" | "failed";
 
 export type Filters = {
   status?: Status;
-  search?: string;
   rocketId?: string;
   sort?: "name-asc" | "name-desc" | "date-asc" | "date-desc";
 };
 
 export const FiltersToolbar = ({
-  value,
-  onChange,
+  filters,
+  search,
+  setSearch,
+  setFilters,
 }: {
-  value: Filters;
-  onChange: (filters: Filters) => void;
+  filters: Filters;
+  search?: string;
+  setSearch: (search: string) => void;
+  setFilters: (filters: Filters) => void;
 }) => {
   return (
     <div className={styles.filters}>
       <Select
         placeholder="Select option"
-        value={value.status}
+        value={filters.status}
         variant="filled"
         onChange={(event) =>
-          onChange({ ...value, status: event.target.value as Status })
+          setFilters({ ...filters, status: event.target.value as Status })
         }
       >
         <option value="future">Future</option>
@@ -36,11 +39,11 @@ export const FiltersToolbar = ({
 
       <Select
         placeholder="Sort by"
-        value={value?.sort}
+        value={filters?.sort}
         variant="filled"
         onChange={(event) =>
-          onChange({
-            ...value,
+          setFilters({
+            ...filters,
             sort: event.target.value as Filters["sort"],
           })
         }
@@ -52,20 +55,18 @@ export const FiltersToolbar = ({
       </Select>
 
       <Input
-        value={value.search ?? ""}
+        value={search ?? ""}
         placeholder="Search"
         variant="filled"
-        onChange={(event) =>
-          onChange({ ...value, search: event.target.value.trim() })
-        }
+        onChange={(event) => setSearch(event.target.value.trim())}
       />
 
       <Input
-        value={value.rocketId ?? ""}
+        value={filters.rocketId ?? ""}
         placeholder="Rocket ID"
         variant="filled"
         onChange={(event) =>
-          onChange({ ...value, rocketId: event.target.value.trim() })
+          setFilters({ ...filters, rocketId: event.target.value.trim() })
         }
       />
     </div>
