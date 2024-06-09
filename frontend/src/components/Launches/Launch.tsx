@@ -5,7 +5,7 @@ import { Chip } from "../../ui/Chip";
 
 import { Modal } from "../../ui/Modal";
 
-import { fetchRocket } from "../../api/rocket";
+import { fetchRocket, type Rocket } from "../../api/rocket";
 
 import styles from "./Launches.module.css";
 
@@ -103,21 +103,26 @@ const Details = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const [rocketDetails, setRocketDetails] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [rocketDetails, setRocketDetails] = useState<Rocket>();
 
   useEffect(() => {
     if (isOpen && rocketId) {
+      setIsLoading(true);
       (async () => {
         const data = await fetchRocket({ id: rocketId });
         setRocketDetails(data);
-        console.log(data);
+        setIsLoading(false);
       })();
     }
   }, [rocketId, isOpen]);
 
+  if (!details && !rocketDetails) return null;
+
   return (
     <Modal isOpen={isOpen} title="Details" onClose={onClose}>
       {details}
+      {isLoading && <div>Loading</div>}
       {rocketDetails && (
         <div className={styles.rocketDetails}>
           {rocketDetails.active !== undefined && (
@@ -125,19 +130,43 @@ const Details = ({
               {rocketDetails.active ? "Active" : "Inactive"}
             </Chip>
           )}
-          <span>Name: {rocketDetails.name}</span>
-          <span>Stages: {rocketDetails.stages}</span>
-          <span>Boosters: {rocketDetails.boosters}</span>
-          <span>Cost per launch: {rocketDetails.cost_per_launch}</span>
-          <span>First flight: {rocketDetails.first_flight}</span>
-          <span>company: {rocketDetails.company}</span>
-          <span>Country: {rocketDetails.country}</span>
-          <span>Description: {rocketDetails.description}</span>
-          <span>Height: {rocketDetails.height.meters} m</span>
-          <span>Diameter: {rocketDetails.diameter.meters} m</span>
-          <span>Mass: {rocketDetails.mass.kg} kg</span>
-          <span>Number of engines: {rocketDetails.engines.number}</span>
-          <span>Type of engines: {rocketDetails.engines.type}</span>
+          {rocketDetails.name && <span>Name: {rocketDetails.name}</span>}
+          {rocketDetails.stages !== undefined && (
+            <span>Stages: {rocketDetails.stages}</span>
+          )}
+          {rocketDetails.boosters !== undefined && (
+            <span>Boosters: {rocketDetails.boosters}</span>
+          )}
+          {rocketDetails.cost_per_launch !== undefined && (
+            <span>Cost per launch: {rocketDetails.cost_per_launch}</span>
+          )}
+          {rocketDetails.first_flight && (
+            <span>First flight: {rocketDetails.first_flight}</span>
+          )}
+          {rocketDetails.company && (
+            <span>company: {rocketDetails.company}</span>
+          )}
+          {rocketDetails.country && (
+            <span>Country: {rocketDetails.country}</span>
+          )}
+          {rocketDetails.description && (
+            <span>Description: {rocketDetails.description}</span>
+          )}
+          {rocketDetails.height.meters !== undefined && (
+            <span>Height: {rocketDetails.height.meters}m</span>
+          )}
+          {rocketDetails.diameter.meters !== undefined && (
+            <span>Diameter: {rocketDetails.diameter.meters}m</span>
+          )}
+          {rocketDetails.mass.kg !== undefined && (
+            <span>Mass: {rocketDetails.mass.kg}kg</span>
+          )}
+          {rocketDetails.engines.number !== undefined && (
+            <span>Number of engines: {rocketDetails.engines.number}</span>
+          )}
+          {rocketDetails.engines.type && (
+            <span>Type of engines: {rocketDetails.engines.type}</span>
+          )}
         </div>
       )}
     </Modal>
