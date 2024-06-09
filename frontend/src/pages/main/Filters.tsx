@@ -6,7 +6,7 @@ import styles from "./Filters.module.css";
 type Status = "future" | "success" | "failed";
 
 export type Filters = {
-  status?: Status | undefined;
+  status?: Status;
   search?: string;
   rocketId?: string;
   sort?: "name-asc" | "name-desc" | "date-asc" | "date-desc";

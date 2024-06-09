@@ -30,54 +30,19 @@ type Response = {
 export type Params = {
   limit?: number;
   page?: number;
-  query?: {
-    upcoming?: boolean;
-    success?: boolean;
-    rocket?: string;
-    $text?: {
-      $search?: string;
-    };
-  };
-  sort?:
-    | {
-        name: "asc" | "desc";
-      }
-    | {
-        date_utc: "asc" | "desc";
-      };
+  search?: string;
+  rocketId?: string;
+  status?: "future" | "success" | "failed";
+  sort?: "name-asc" | "name-desc" | "date-asc" | "date-desc";
 };
 
-export const fetchLaunches = ({
-  limit = 10,
-  page = 1,
-  query = {},
-  sort,
-}: Params = {}): Promise<Response> => {
+export const fetchLaunches = (params: Params = {}): Promise<Response> => {
   return fetch("http://localhost:3000/api/launches", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      query,
-      options: {
-        limit,
-        page,
-        sort,
-        pagination: true,
-        select: [
-          "name",
-          "details",
-          "date_utc",
-          "rocket",
-          "success",
-          "details",
-          "flight_number",
-          "upcoming",
-          "links",
-        ],
-      },
-    }),
+    body: JSON.stringify(params),
   })
     .then((r) => r.json())
     .then(({ docs, ...rest }) => ({ launches: docs, ...rest }));

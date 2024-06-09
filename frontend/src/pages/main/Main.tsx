@@ -5,8 +5,6 @@ import { Launches } from "../../components/Launches";
 
 import { FiltersToolbar, type Filters } from "./Filters";
 
-import { getParams } from "./getParams";
-
 import styles from "./Main.module.css";
 
 export const Main = () => {
@@ -30,7 +28,7 @@ const Content = ({ filters }: { filters: Filters }) => {
 
   const fetchData = useCallback(async () => {
     try {
-      const data = await fetchLaunches(getParams(page, filters));
+      const data = await fetchLaunches({ page, ...filters });
       setHasMore(data.hasNextPage);
       setLaunches((launches) => [...launches, ...data.launches]);
     } catch {
