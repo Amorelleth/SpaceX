@@ -1,5 +1,13 @@
 import { useRef, useCallback } from "react";
 
+/**
+ * A custom hook that uses IntersectionObserver to execute a callback function
+ * when an element becomes visible in the viewport.
+ *
+ * @param callback - The function to be executed when the element is visible.
+ * @param options - Optional IntersectionObserver configuration options.
+ * @returns A ref callback function to be assigned to the element to be observed.
+ */
 export function useObserver(
   callback: () => void,
   options?: IntersectionObserverInit
