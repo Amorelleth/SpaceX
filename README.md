@@ -18,16 +18,16 @@ yarn dev
 
 ## Backend
 
-For the backend, I used Express and added two endpoints:
+Backend is implemented using Express. There are two endpoints available:
 
 1. Fetching launches using the API endpoint `/launches/query`
 2. Fetching rocket details using the API endpoint `/rockets/:id`
 
-The request body for fetching launches has been modified and simplified for ease of use by the client side.
+The request body for fetching launches was modified comparing to the original API for ease of use by the client side.
 
 ## Frontend
 
-For the frontend, I used React, TypeScript, PostCSS, CSS Modules, and Vite. I utilized Chakra UI to implement inputs and selects. Additionally, I added CSS variables for colors and indents, and tried to implement a responsive design.
+Frontend is implemented using React, TypeScript, PostCSS, CSS Modules, and Vite. Chakra UI is used to implement inputs and selects. Additionally, there are CSS variables for colors and indents.
 
 The application has one page containing the title, filters, and launches cards. When you click on a launch card, a modal window opens with launch details and rocket information.
 
