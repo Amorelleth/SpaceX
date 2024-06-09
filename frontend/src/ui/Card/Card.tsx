@@ -17,6 +17,7 @@ export const Card = forwardRef<
   return (
     <div
       ref={ref}
+      onClick={onClick}
       className={clsx(styles.container, { [styles.clickable]: onClick })}
       tabIndex={onClick ? 0 : -1}
     >
