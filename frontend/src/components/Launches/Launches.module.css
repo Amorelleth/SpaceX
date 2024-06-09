@@ -24,3 +24,8 @@
     }
   }
 }
+
+.rocketDetails {
+  display: flex;
+  flex-direction: column;
+}
