@@ -46,6 +46,12 @@ const sortMap: Record<NonNullable<ReqBody["sort"]>, Body["sort"]> = {
   "date-desc": { date_utc: "desc" },
 };
 
+/**
+ * Transforms a request body object into a specific format.
+ *
+ * @param body - Request body object.
+ * @returns An object formatted according to the expected structure, with query parameters and options.
+ */
 export function transformBody(body: ReqBody): Body {
   return {
     ...(body.sort && { sort: sortMap[body.sort] }),

@@ -18,6 +18,14 @@ type Launch = {
   };
 };
 
+/**
+ * Fetches launch data from the SpaceX API and sends it as a JSON response.
+ * @param req - The request object containing the body with query parameters.
+ * @param res - The response object used to send the fetched launch data or an error message.
+ * @returns A JSON response containing the launch data and pagination information if the fetch
+ *          is successful, or an error message if the fetch fails.
+ * @throws Will return a 500 status code and an error message if the fetch operation fails.
+ */
 export async function fetchLaunches(
   req: Request<{}, {}, ReqBody>,
   res: Response<
