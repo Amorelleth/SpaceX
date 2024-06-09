@@ -13,6 +13,19 @@ app.use(
   })
 );
 
+app.get("/api/rocket/:id", async (req, res) => {
+  try {
+    const response = await fetch(
+      `https://api.spacexdata.com/v4/rockets/${req.params.id}`
+    );
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching rocket data:", error);
+    res.status(500).json({ error: "Failed to fetch rocket data" });
+  }
+});
+
 app.post("/api/launches", async (req, res) => {
   const requestBody = req.body;
 
@@ -35,7 +48,7 @@ app.post("/api/launches", async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error fetching launches:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
